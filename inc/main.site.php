@@ -60,8 +60,6 @@ logmsg("current action is \"$action\"");
 
 
 $method=$action."Act";
-echo "- $controllerclassname - ";
-
 
 	if(class_exists($controllerclassname)){
 		$controllerclass=new $controllerclassname();

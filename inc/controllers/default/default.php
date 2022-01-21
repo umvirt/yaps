@@ -1,10 +1,6 @@
 <?php
-	class defaultController extends Controller{
-	
-		function defaultAct(){
-
-echo "tasty";
-
-}
-
+class defaultController extends Controller{
+	function defaultAct(){
+		echo "tasty";
+	}
 }
