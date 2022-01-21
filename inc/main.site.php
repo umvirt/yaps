@@ -13,7 +13,28 @@ $ns="default";
 $ns=$_REQUEST["ns"];
 }
 
+@$controller=$_REQUEST['controller'];
+$controller="default";
+
+@$action=$_REQUEST['action'];
+if(!$action){$action="default";}
+
+
+
+//override default action
+if($ns=="default" and $controller=="default" and $action=="default"){
+        $ns=$config['site_default_ns'];
+        $controller=$config['site_default_controller'];
+        $action=$config['site_default_action'];
+}
+
 logmsg("current namespace is \"$ns\"");
+logmsg("current controller is \"$controller\"");
+logmsg("current action is \"$action\"");
+
+
+
+//logmsg("current namespace is \"$ns\"");
 
 $dirs=array();
 //add common directory
@@ -47,19 +68,33 @@ logmsg("loading controller \"".$dir."/".$file."\"");
 
 
 $controller="default";
-$controllerclassname=$controller."Controller";
+//$controllerclassname=$controller."Controller";
 
+//logmsg("current controller is \"$controller\"");
+
+
+//@$action=$_REQUEST['action'];
+//if(!$action){$action="default";}
+
+//logmsg("current action is \"$action\"");
+
+/*
+//override default action
+if($ns=="default" and $controller=="default" and $action=="default"){
+	$ns=$config['site_default_ns'];
+	$controller=$config['site_default_controller'];
+	$action=$config['site_default_action'];
+}
+
+logmsg("current namespace is \"$ns\"");
 logmsg("current controller is \"$controller\"");
-
-
-@$action=$_REQUEST['action'];
-if(!$action){$action="default";}
-
 logmsg("current action is \"$action\"");
-
-
+*/
 
 $method=$action."Act";
+
+$controllerclassname=$controller."Controller";
+
 
 	if(class_exists($controllerclassname)){
 		$controllerclass=new $controllerclassname();

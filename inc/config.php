@@ -4,6 +4,13 @@ $db_config['user']='ulfs';
 $db_config['password']='VKkvvS1eCtLkmxIb';
 $db_config['server']='127.0.0.1';
 
+$config['site_title']="UmVirt ][ackerz Portal";
+
+$config['site_default_ns']="user";
+$config['site_default_controller']="default";
+$config['site_default_action']="default";
+
+
 //local install root path
 $config['localpath']="/mnt/umvirt";
 //files repository root

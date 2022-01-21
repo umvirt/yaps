@@ -7,8 +7,10 @@ DEFINE('INCDIR',APPDIR.'/inc/');
 //echo APPDIR;exit;
 include INCDIR."config.php";
 include INCDIR."classes/db.php";
+include INCDIR."classes/yaps.php";
+include INCDIR."classes/user.php";
 $db=new db_connection($db_config);
-
+$Yaps=new Yaps($db);
 $LOG_DEBUG=[];
 
 // Returns a file size limit in bytes based on the PHP upload_max_filesize

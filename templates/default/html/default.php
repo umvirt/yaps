@@ -1,10 +1,15 @@
 <?php
-echo "<html>
-$content
-<hr>
-$ns=$controller=$action
-<hr>";
+echo "<html>";
+echo "<h1>".$config['site_title']."</h1>";
+echo $content;
 ?>
-<?php var_dump($LOG_DEBUG);?>
-</html>";
+<!--
+<?php
+
+if($LOG_DEBUG){
+ echo("\n- ".join($LOG_DEBUG, "\n- ")."\n");
+}
+?>
+-->
+</html>
 
