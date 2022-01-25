@@ -92,24 +92,55 @@ logmsg("current action is \"$action\"");
 */
 
 $method=$action."Act";
+$rawmethod=$action."RawAct";
+$cmdmethod=$action."CmdAct";
+
+
 
 $controllerclassname=$controller."Controller";
 
 
 	if(class_exists($controllerclassname)){
 		$controllerclass=new $controllerclassname();
+		logmsg("controller class is found");
+		
+		if(method_exists($controllerclass,$method)){
+			logmsg("controller action method is found");
+			$controllerclass->$method();
+		}elseif(method_exists($controllerclass,$rawmethod)){
+			ob_end_clean();
+			logmsg("controller rawaction method is found");
+			$controllerclass->$rawmethod();
+			exit;
+		}elseif(method_exists($controllerclass,$cmdmethod)){
+			ob_end_clean();
+			logmsg("controller cmdaction method is found");
+                        $x=$controllerclass->$cmdmethod();
+			$_SESSION['FLASH_MESSAGE']=$controllerclass->showCmdResult(@$x);
+//var_dump($config['site_debug']);
 
-logmsg("controller class is found");
+if(!$config['site_debug']){			
+					if(@$controllerclass->localnextlocation){
+						$Yaps->local_redirect($controllerclass->localnextlocation);
+					}
+                                        if(@$controllerclass->nextlocation){
+                                                $Yaps->redirect($controllerclass->nextlocation);
+                                        }
+
+					if(isset($_SERVER["HTTP_REFERER"])){
+					    $Yaps->redirect($_SERVER["HTTP_REFERER"]);
+					}
+}
+//$Yaps->redirect();
+		}else{die("no action method");}
+
+	
+	}else{die("no controller class");}
 
 
-if(method_exists($controllerclass,$method)){
-logmsg("controller action method is found");
 
-$controllerclass->$method();
-}else{die("no action method");}
-
-}else{die("no controller class");}
+$flash_msg=@json_decode($_SESSION['FLASH_MESSAGE']);
+$_SESSION['FLASH_MESSAGE']="";
 
 
-
-
+//var_dump($_SESSION);

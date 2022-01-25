@@ -11,6 +11,13 @@ $config['site_default_controller']="default";
 $config['site_default_action']="default";
 
 $config['site_path']="/packager";
+$config['site_debug']=false;
+
+define('OBJ_CMD_RESULT','Command result');
+define('CMD_FAIL_RESULT','Execution was failed');
+define('CMD_SUCCESS_RESULT','Execution completed succesfully');
+
+
 
 
 //local install root path

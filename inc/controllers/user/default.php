@@ -1,8 +1,9 @@
 <?php
 class defaultController extends Controller{
-function loginAct(){
+function loginCmdAct(){
 $login=@addslashes($this->request['login']);
 $password=@addslashes($this->request['password']);
+
 
 
 //var_dump($_SESSION,$login,$password, $this->yaps->user->chkcredentials($login,$password));
@@ -10,17 +11,22 @@ $password=@addslashes($this->request['password']);
 if($this->yaps->user->chkcredentials($login,$password)){
 $_SESSION['login']=$login;
 $_SESSION['password']=$password;
+$this->localnextlocation="/";
 
+return true;
 }
 
-$this->yaps->local_redirect();
+//$this->yaps->local_redirect();
 }
 
-function logoutAct(){
+function logoutCmdAct(){
 $_SESSION['login']="";
 $_SESSION['password']="";
+$this->localnextlocation="/";
 
-$this->yaps->local_redirect();
+return true;
+
+//$this->yaps->local_redirect();
 
 }
 
