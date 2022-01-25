@@ -10,6 +10,8 @@ $config['site_default_ns']="user";
 $config['site_default_controller']="default";
 $config['site_default_action']="default";
 
+$config['site_path']="/packager";
+
 
 //local install root path
 $config['localpath']="/mnt/umvirt";

@@ -13,14 +13,14 @@ $_SESSION['password']=$password;
 
 }
 
-$this->yaps->redirect('/packager/');
+$this->yaps->local_redirect();
 }
 
 function logoutAct(){
 $_SESSION['login']="";
 $_SESSION['password']="";
 
-$this->yaps->redirect('/packager/');
+$this->yaps->local_redirect();
 
 }
 
@@ -28,7 +28,7 @@ $this->yaps->redirect('/packager/');
 
 function loginfrmAct(){
 ?>
-<form action='/packager/user/login' method=post><input name=login><input name=password><input type=submit></form>
+<form action='<?php echo $this->yaps->config['site_path']."/user/login";?>' method=post><input name=login><input name=password><input type=submit></form>
 
 <?php
 
@@ -38,9 +38,9 @@ function loginfrmAct(){
 		$islogined=$this->yaps->user->is_logined();
 		//var_dump($islogined);
 if($islogined){
-echo "You logined as ".$_SESSION['login'].". Do you want to <a href='/packager/user/logout'>exit</a>?";
+echo "You logined as ".$_SESSION['login'].". Do you want to <a href='".$this->yaps->config['site_path']."/user/logout'>exit</a>?";
 }else{
-echo "Welcome! Do you want to <a href='/packager/user/loginfrm'>login</a>?";
+echo "Welcome! Do you want to <a href='".$this->yaps->config['site_path']."/user/loginfrm'>login</a>?";
 }
 //		echo @$user;
 //		echo "tasty";
