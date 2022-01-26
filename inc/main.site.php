@@ -34,18 +34,38 @@ logmsg("current action is \"$action\"");
 
 
 
+
 //logmsg("current namespace is \"$ns\"");
 
-$dirs=array();
+$cdirs=array();
+
+$mdir=INCDIR."modules/";
+if ($dh = opendir($mdir)) {
+ while (($file = readdir($dh)) !== false) {
+  if(is_dir($mdir.'/'.$file) and !in_array($file, array('.','..'))){
+$cdirs[]=INCDIR."modules/$file/controllers/".$ns;
+if(file_exists(INCDIR."modules/$file/module.php")){
+include(INCDIR."modules/$file/module.php");
+}
+
+}}
+
+}
+
+
 //add common directory
-$dirs[]=INCDIR."controllers/common";
+$cdirs[]=INCDIR."controllers/common";
 //add namespace specified directory
 //if(isset($namespaces[$ns])){
-$dirs[]=INCDIR."controllers/".$ns;
+
+if(file_exists(INCDIR."controllers/".$ns)){
+$cdirs[]=INCDIR."controllers/".$ns;
+}
+
 //}
 //var_dump($dirs);
 //Load each file in directories
-foreach($dirs as $dir){
+foreach($cdirs as $dir){
 	if(file_exists($dir)){
 		if ($dh = opendir($dir)) {
 
