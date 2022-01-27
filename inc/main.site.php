@@ -43,7 +43,10 @@ $mdir=INCDIR."modules/";
 if ($dh = opendir($mdir)) {
  while (($file = readdir($dh)) !== false) {
   if(is_dir($mdir.'/'.$file) and !in_array($file, array('.','..'))){
+
+if(file_exists(INCDIR."modules/$file/controllers/".$ns)){
 $cdirs[]=INCDIR."modules/$file/controllers/".$ns;
+}
 if(file_exists(INCDIR."modules/$file/module.php")){
 include(INCDIR."modules/$file/module.php");
 }
