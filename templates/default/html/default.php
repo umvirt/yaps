@@ -12,10 +12,13 @@ echo "<p>[ command execution status: <b>".$flash_msg->status."</b> ]</p>";
 
 echo $content;
 
-echo "<p>";
-echo "<li><a href=".$Yaps->config['site_path']."/ulfs>ULFS</a>";
+$t="navmap_$ns";
 
+//echo $t;
 
+if(function_exists($t)){
+$t();
+}
 //var_dump($_SESSION['FLASH_MESSAGE'],$flash_msg);
 
 
