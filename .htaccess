@@ -8,6 +8,18 @@ RewriteRule ^user/logout(/?)$ /packager/index.php?ns=user&action=logout
 RewriteRule ^ulfs(/?)$ /packager/index.php?ns=ulfs
 RewriteRule ^ulfs/release/([0-9.]+)(/?)$ /packager/index.php?ns=ulfs&action=release&release=$1
 RewriteRule ^ulfs/release/([0-9.]+)/packages(/?)$ /packager/index.php?ns=ulfs&action=packages&release=$1
+RewriteRule ^ulfs/release/([0-9.]+)/package/([a-zA-z0-9.-]+)(/?)$ /packager/index.php?ns=ulfs&action=packageinfo&release=$1&package=$2
+RewriteRule ^ulfs/release/([0-9.]+)/package/([a-zA-z0-9.-]+)/edit(/?)$ /packager/index.php?ns=ulfs&action=packageedit&release=$1&package=$2
+RewriteRule ^ulfs/release/([0-9.]+)/package/([a-zA-z0-9.-]+)/adddependances(/?)$ /packager/index.php?ns=ulfs&action=adddependancesfrm&release=$1&package=$2
+RewriteRule ^ulfs/release/([0-9.]+)/package/([a-zA-z0-9.-]+)/editdependances(/?)$ /packager/index.php?ns=ulfs&action=editdependancesfrm&release=$1&package=$2
+RewriteRule ^ulfs/release/([0-9.]+)/package/([a-zA-z0-9.-]+)/addpatch(/?)$ /packager/index.php?ns=ulfs&action=addpatchfrm&release=$1&package=$2
+RewriteRule ^ulfs/release/([0-9.]+)/package/([a-zA-z0-9.-]+)/editpatches(/?)$ /packager/index.php?ns=ulfs&action=editpatchesfrm&release=$1&package=$2
+RewriteRule ^ulfs/release/([0-9.]+)/package/([a-zA-z0-9.-]+)/patch/([a-zA-z0-9.-]+)(/?)$ /packager/index.php?ns=ulfs&action=editpatchfrm&release=$1&package=$2&patch=$3
+
+
+RewriteRule ^ulfs/release/([0-9.]+)/package/([a-zA-z0-9.-]+)/dependance/([a-zA-z0-9.-]+)(/?)$ /packager/index.php?ns=ulfs&action=editdependancefrm&release=$1&package=$2&dependance=$3
+RewriteRule ^ulfs/release/([0-9.]+)/newpackage(/?)$ /packager/index.php?ns=ulfs&action=newpackagefrm&release=$1
+
 RewriteRule ^ulfs/release/([0-9.]+)/patches(/?)$ /packager/index.php?ns=ulfs&action=patches&release=$1
 RewriteRule ^ulfs/release/([0-9.]+)/addons(/?)$ /packager/index.php?ns=ulfs&action=addons&release=$1
 

@@ -5,6 +5,7 @@ function __construct($db){
 global $config;
 $this->user=new YapsUser($db);
 $this->config=$config;
+$this->db=$db;
 }
 
 function redirect($url){

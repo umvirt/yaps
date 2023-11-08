@@ -5,6 +5,7 @@ include "main.php";
 include INCDIR."classes/controller.php";
 
 
+include INCDIR."/tools/formgen/formgen.php";
 
 
 if(!@$_REQUEST["ns"]){
