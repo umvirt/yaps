@@ -15,7 +15,7 @@ $ns=$_REQUEST["ns"];
 }
 
 @$controller=$_REQUEST['controller'];
-$controller="default";
+if(!$controller){$controller="default";}
 
 @$action=$_REQUEST['action'];
 if(!$action){$action="default";}
@@ -67,13 +67,13 @@ $cdirs[]=INCDIR."controllers/".$ns;
 }
 
 //}
-//var_dump($dirs);
+//var_dump($cdirs);
 //Load each file in directories
 foreach($cdirs as $dir){
 	if(file_exists($dir)){
 		if ($dh = opendir($dir)) {
 
-logmsg("looking for controlers in \"$dir\"");
+logmsg("looking for controllers in \"$dir\"");
 
 //echo ".$dir.";
 			while (($file = readdir($dh)) !== false) {
@@ -91,7 +91,7 @@ logmsg("loading controller \"".$dir."/".$file."\"");
 }
 
 
-$controller="default";
+//$controller="default";
 //$controllerclassname=$controller."Controller";
 
 //logmsg("current controller is \"$controller\"");
