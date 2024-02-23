@@ -33,10 +33,26 @@ return true;
 
 
 function loginfrmAct(){
+
+$f=new Formgen_Form();
+$f->AddField('Login','login','','',"User's login");
+$f->AddField('Password','password','','password',"User's password");
+$f->AddHiddenField('ns','user');
+$f->AddHiddenField('action','login');
+$f->action=$this->yaps->config['site_path'];
+$f->submitlabel="Sign in";
+$f->method="post";
+echo $f->render();
+
+
+
+/*
 ?>
 <form action='<?php echo $this->yaps->config['site_path']."/user/login";?>' method=post><input name=login><input name=password><input type=submit></form>
 
 <?php
+*/
+
 
 }
 
