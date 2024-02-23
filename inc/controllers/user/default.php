@@ -8,7 +8,10 @@ $password=@addslashes($this->request['password']);
 
 //var_dump($_SESSION,$login,$password, $this->yaps->user->chkcredentials($login,$password));
 
-if($this->yaps->user->chkcredentials($login,$password)){
+$uid=$this->yaps->user->chkcredentials($login,$password);
+
+if($uid){
+$_SESSION['uid']=$uid;
 $_SESSION['login']=$login;
 $_SESSION['password']=$password;
 $this->localnextlocation="/";

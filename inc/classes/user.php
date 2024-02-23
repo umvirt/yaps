@@ -21,7 +21,9 @@ $this->db=$db;
 		$sql="select uid from users where `login`=\"$login\" and `password`=\"$password\"";
 		$this->db->execute($sql);
                 $e=$this->db->dataset;
-                return count($e);
+		foreach($e as $v){
+                return $v['uid'];
+		}
 	}
 
 function is_logined(){
