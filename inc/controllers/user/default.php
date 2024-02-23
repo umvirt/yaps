@@ -66,5 +66,20 @@ echo "Welcome! Do you want to <a href='".$this->yaps->config['site_path']."/user
 }
 //		echo @$user;
 //		echo "tasty";
+
+
+
+//var_dump($this->yaps->modules);
+
+if(count($this->yaps->modules)){
+echo "<h2>Available modules</h2>";
+echo "<ul>";
+foreach($this->yaps->modules as $module){
+echo "<li><a href=\"".$this->yaps->config['site_path']."/".$module->code."\">$module->name</a> - $module->description";
+}
+echo "</ul>";
+}
+
+
 	}
 }
