@@ -51,7 +51,12 @@ case 'textarea':
 $f.="<div><textarea rows=6 cols=40 name=$field->name>$field->value</textarea><br/><i>$field->description</i></div>\n";
 break;
 default:
-$f.="<div><input name=$field->name value=\"$field->value\" autocomplete=off><br/><i>$field->description</i></div>\n";
+
+$type="";
+if($field->type){
+$type="type=\"".$field->type."\"";
+}
+$f.="<div><input name=$field->name value=\"$field->value\" autocomplete=off $type><br/><i>$field->description</i></div>\n";
 }
 
 //Submit button
