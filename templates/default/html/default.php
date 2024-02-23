@@ -1,6 +1,15 @@
 <?php
 echo "<html>";
-echo "<h1>".$config['site_title']."</h1>";
+echo "<h1><a href=".$Yaps->config['site_path'].">".$config['site_title']."</a></h1>";
+
+
+foreach($Yaps->modules as $module){
+if($module->code==$ns){
+echo "<h2>Module: <a href=".$Yaps->config['site_path']."/$ns>$module->name</a></h2>";
+}
+
+}
+
 
 if($flash_msg){
 echo "<p>[ command execution status: <b>".$flash_msg->status."</b> ]</p>";
@@ -11,6 +20,8 @@ echo "<p>[ command execution status: <b>".$flash_msg->status."</b> ]</p>";
 
 
 echo $content;
+
+echo "<hr>";
 
 $t="navmap_$ns";
 
