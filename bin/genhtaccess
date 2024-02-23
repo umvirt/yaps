@@ -1,0 +1,35 @@
+#!/usr/bin/env php
+<?php
+
+include "../inc/main.php";
+
+
+//Load main template
+
+$template=file_get_contents(APPDIR.'/htaccess.tpl');
+
+
+//Load templates from modules
+
+$mdir=INCDIR."modules/";
+if ($dh = opendir($mdir)) {
+ while (($file = readdir($dh)) !== false) {
+  if(is_dir($mdir.'/'.$file) and !in_array($file, array('.','..'))){
+
+
+$mht=$mdir.'/'.$file."/htaccess.tpl";
+
+if(file_exists($mht)){
+//echo $file;
+$template.=file_get_contents($mht);
+
+}
+
+}}
+
+}
+
+
+$template=str_replace("%sitepath%",$config['site_path'],$template);
+
+echo $template;
