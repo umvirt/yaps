@@ -13,13 +13,13 @@ $config['filespath']="/mnt/storage/data";
 $config['dumpsleep']=0;
 
 
-$config['site_title']="ULFS Package Developer";
+$config['site_title']="YAPS";
 
 $config['site_default_ns']="user";
 $config['site_default_controller']="default";
 $config['site_default_action']="default";
 
-$config['site_path']="/packager";
+$config['site_path']="/";
 $config['site_debug']=false;
 
 define('OBJ_CMD_RESULT','Command result');
