@@ -13,6 +13,19 @@ $config['filespath']="/mnt/storage/data";
 $config['dumpsleep']=0;
 
 
+$config['site_title']="ULFS Package Developer";
+
+$config['site_default_ns']="user";
+$config['site_default_controller']="default";
+$config['site_default_action']="default";
+
+$config['site_path']="/packager";
+$config['site_debug']=false;
+
+define('OBJ_CMD_RESULT','Command result');
+define('CMD_FAIL_RESULT','Execution was failed');
+define('CMD_SUCCESS_RESULT','Execution completed succesfully');
+
 //URLs
 //HTTP & IP
 $config['packages_url']="http://".@$_SERVER['SERVER_ADDR']."/linux/packages/";
