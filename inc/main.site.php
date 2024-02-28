@@ -40,6 +40,8 @@ logmsg("current action is \"$action\"");
 
 $cdirs=array();
 
+
+//Load modules controllers
 $mdir=INCDIR."modules/";
 if ($dh = opendir($mdir)) {
  while (($file = readdir($dh)) !== false) {
@@ -48,13 +50,11 @@ if ($dh = opendir($mdir)) {
 if(file_exists(INCDIR."modules/$file/controllers/".$ns)){
 $cdirs[]=INCDIR."modules/$file/controllers/".$ns;
 }
-if(file_exists(INCDIR."modules/$file/module.php")){
-include(INCDIR."modules/$file/module.php");
-}
 
 }}
 
 }
+
 
 
 //add common directory
