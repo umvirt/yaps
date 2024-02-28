@@ -1,0 +1,40 @@
+#!/usr/bin/env php
+<?php
+include "../inc/main.php";
+
+function showct($table){
+global $db;
+$sql="show create table $table";
+
+$db->execute($sql);
+$x=$db->dataset;
+if(count($x)){
+//var_dump($x);
+foreach($x as $v){
+
+$ct=$v["Create Table"];
+$string ='A AUTO_INCREMENT=100 B';
+$pattern = '/AUTO_INCREMENT=(\d+)/i';
+$replacement = '';
+$ct=preg_replace($pattern, $replacement, $ct);
+
+return $ct.";";
+}
+}
+}
+
+$tables=array(
+'users'
+);
+
+$ct=array();
+
+$ct[]="set foreign_key_checks=0;";
+
+foreach ($tables as $v){
+$ct[]=showct($v);
+}
+
+$ct[]="set foreign_key_checks=1;";
+
+echo join($ct, "\n#SQLDELIMETER\n");
