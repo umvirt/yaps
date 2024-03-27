@@ -9,6 +9,8 @@ include INCDIR."config.php";
 include INCDIR."classes/db.php";
 include INCDIR."classes/yaps.php";
 include INCDIR."classes/user.php";
+include INCDIR."classes/module.php";
+
 $db=new db_connection($db_config);
 $Yaps=new Yaps($db);
 $LOG_DEBUG=[];

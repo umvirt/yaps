@@ -18,8 +18,9 @@ header("Location: ".$this->config["site_path"]."$url");
 exit;
 }
 
-function addModule($code,$name,$description){
+function addModule($object,$code,$name,$description){
 $obj=new YapsModule();
+$obj->object=$object;
 $obj->code=$code;
 $obj->name=$name;
 $obj->description=$description;
@@ -30,10 +31,3 @@ $this->modules[]=$obj;
 
 }
 
-
-
-class YapsModule{
-var $code;
-var $name;
-var $description;
-}
