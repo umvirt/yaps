@@ -1,0 +1,27 @@
+#!/usr/bin/env php
+<?php
+include "../inc/main.php";
+
+$bname=date("Y-m-d_H:i:s");
+
+echo "Backup name: ".$bname."\n";
+
+mkdir(APPDIR.'/tmp');
+mkdir(APPDIR.'/tmp/backups/');
+mkdir(APPDIR.'/tmp/backups/'.$bname);
+
+$path=APPDIR.'/tmp/backups/'.$bname;
+
+
+foreach($Yaps->modules as $module){
+echo "Processing module: ".$module->name."...";
+$object=$module->object;
+
+
+
+$Yaps->$object->backup($path);
+//file_put_contents('../tmp/backups/'.$bname.'/'.$module->code.'.xml',$data);
+
+sleep(5);
+echo "\n";
+}
