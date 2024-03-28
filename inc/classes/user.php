@@ -18,12 +18,25 @@ $this->db=$db;
 
 
 	function chkcredentials($login, $password){
+		//Simple verification (raw password)
+		/*
 		$sql="select uid from users where `login`=\"$login\" and `password`=\"$password\"";
 		$this->db->execute($sql);
                 $e=$this->db->dataset;
 		foreach($e as $v){
                 return $v['uid'];
 		}
+		*/
+		//Complex verification (pasword hash)
+                $sql="select uid, salt, password from users where `login`=\"$login\"";
+                $this->db->execute($sql);
+                $e=$this->db->dataset;
+                foreach($e as $v){
+			if(hash_equals($v['password'],crypt($password,$v['salt']))){
+                		return $v['uid'];
+			}
+                }
+
 	}
 
 function is_logined(){

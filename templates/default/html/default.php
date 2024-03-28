@@ -11,12 +11,27 @@ echo "<h2>Module: <a href=".$Yaps->config['site_path']."/$ns>$module->name</a></
 }
 
 
+
 if($flash_msg){
 echo "<p>[ command execution status: <b>".$flash_msg->status."</b> ]</p>";
 
 //if($flash_msg['])
 
 }
+
+echo "<hr>";
+
+
+                $islogined=$Yaps->user->is_logined();
+                //var_dump($islogined);
+if($islogined){
+echo "User: ".$_SESSION['login']." [ <a href='".$Yaps->config['site_path']."/user/logout'>Log out</a> ]";
+}else{
+echo "Visitor [ <a href='".$Yaps->config['site_path']."/user/loginfrm'>Sign in</a> ]";
+}
+
+echo "<hr>";
+
 
 
 echo $content;

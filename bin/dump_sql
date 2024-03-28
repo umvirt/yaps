@@ -24,7 +24,9 @@ return $ct.";";
 }
 
 $tables=array(
-'users'
+'users',
+'roles',
+'users_roles'
 );
 
 $ct=array();
