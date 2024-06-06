@@ -1,8 +1,11 @@
 <?php
 class YapsUser{
+var $roles;
+
 
 function __construct($db){
 $this->db=$db;
+$this->roles=$this->getRoles();
 }
 
         /**
@@ -41,6 +44,18 @@ $this->db=$db;
 
 function is_logined(){
 return $this->chkcredentials(@$_SESSION['login'],@$_SESSION['password']);
+}
+
+function getRoles(){
+$res=array();
+if($this->is_logined()){
+$res[]='user';
+}else{
+$res[]='visitor';
+}
+
+
+return $res;
 }
 
 
