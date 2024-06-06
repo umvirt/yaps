@@ -81,6 +81,11 @@ $a="";
 if($this->action){
 $a="action=\"$this->action\"";
 }
+if($this->method){
+$a.=" method=\"$this->method\"";
+
+}
+
 $s="<form $a>\n$f\n$submit\n$hf</form>\n";
 return($s); 
 }
