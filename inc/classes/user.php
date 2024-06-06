@@ -47,9 +47,15 @@ return $this->chkcredentials(@$_SESSION['login'],@$_SESSION['password']);
 }
 
 function getRoles(){
+$uid=$this->is_logined();
+
 $res=array();
-if($this->is_logined()){
+if($uid){
 $res[]='user';
+if($uid==1){
+$res[]='superuser';
+}
+
 }else{
 $res[]='visitor';
 }
