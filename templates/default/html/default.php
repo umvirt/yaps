@@ -5,7 +5,7 @@ echo "<h1><a href=".$Yaps->config['site_path'].">".$config['site_title']."</a></
 
 foreach($Yaps->modules as $module){
 if($module->code==$ns){
-echo "<h2>Module: <a href=".$Yaps->config['site_path']."/$ns>$module->name</a></h2>";
+echo "<h2>Module: <a href=".$Yaps->localLink("/$ns").">$module->name</a></h2>";
 }
 
 }
@@ -25,9 +25,9 @@ echo "<hr>";
                 $islogined=$Yaps->user->is_logined();
                 //var_dump($islogined);
 if($islogined){
-echo "User: ".$_SESSION['login']." [ <a href='".$Yaps->config['site_path']."/user/logout'>Log out</a> ]";
+echo "User: ".$_SESSION['login']." [ <a href='".$Yaps->localLink("/user/logout")."'>Log out</a> ]";
 }else{
-echo "Visitor [ <a href='".$Yaps->config['site_path']."/user/loginfrm'>Sign in</a> ]";
+echo "Visitor [ <a href='".$Yaps->localLink("/user/loginfrm")."'>Sign in</a> ]";
 }
 
 echo "<hr>";
@@ -52,6 +52,7 @@ $t();
 <!--
 <?php
 if($LOG_DEBUG){
+ var_dump($Yaps->user->roles);
  var_dump($_SESSION['FLASH_MESSAGE'],$flash_msg);
  echo("\n- ".join($LOG_DEBUG, "\n- ")."\n");
 }

@@ -63,9 +63,9 @@ echo $f->render();
 		$islogined=$this->yaps->user->is_logined();
 		//var_dump($islogined);
 if($islogined){
-echo "You logined as ".$_SESSION['login'].". Do you want to <a href='".$this->yaps->config['site_path']."/user/logout'>exit</a>?";
+echo "You logined as ".$_SESSION['login'].". Do you want to <a href='".$this->yaps->localLink("/user/logout")."'>exit</a>?";
 }else{
-echo "Welcome! Do you want to <a href='".$this->yaps->config['site_path']."/user/loginfrm'>login</a>?";
+echo "Welcome! Do you want to <a href='".$this->yaps->localLink("/user/loginfrm")."'>login</a>?";
 }
 //		echo @$user;
 //		echo "tasty";
@@ -78,7 +78,7 @@ if(count($this->yaps->modules)){
 echo "<h2>Available modules</h2>";
 echo "<ul>";
 foreach($this->yaps->modules as $module){
-echo "<li><a href=\"".$this->yaps->config['site_path']."/".$module->code."\">$module->name</a> - $module->description";
+echo "<li><a href=\"".$this->yaps->localLink("/".$module->code)."\">$module->name</a> - $module->description";
 }
 echo "</ul>";
 }

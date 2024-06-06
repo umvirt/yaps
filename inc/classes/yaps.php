@@ -13,8 +13,19 @@ function redirect($url){
 header("Location: $url");
 exit;
 }
-function local_redirect($url=""){
-header("Location: ".$this->config["site_path"]."$url");
+
+function localLink($url="/"){
+$url=substr($url, 1);
+$target=$this->config["site_path"].$url;
+return $target;
+}
+
+
+function local_redirect($url="/"){
+//$url=substr($url, 1);
+//$target=$this->config["site_path"].$url;
+$target=$this->localLink($url);
+header("Location: $target");
 exit;
 }
 
