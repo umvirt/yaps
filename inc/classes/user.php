@@ -1,5 +1,6 @@
 <?php
 class YapsUser{
+var $uid;
 var $roles;
 
 
@@ -47,12 +48,12 @@ return $this->chkcredentials(@$_SESSION['login'],@$_SESSION['password']);
 }
 
 function getRoles(){
-$uid=$this->is_logined();
+$this->uid=$this->is_logined();
 
 $res=array();
-if($uid){
+if($this->uid){
 $res[]='user';
-if($uid==1){
+if($this->uid==1){
 $res[]='superuser';
 }
 
@@ -63,6 +64,12 @@ $res[]='visitor';
 
 return $res;
 }
+
+
+function in_role($code){
+return in_array($code, $this->roles);
+}
+
 
 
 }
