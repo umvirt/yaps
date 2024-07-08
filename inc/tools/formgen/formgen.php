@@ -26,7 +26,7 @@ $field->description=$description;
 //add field
 $this->fields[]=$field;
 
-return $this;
+return $field;
 }
 
 function AddHiddenField($name,$value){
@@ -50,6 +50,25 @@ switch($field->type){
 case 'textarea':
 $f.="<div><textarea rows=6 cols=40 name=$field->name>$field->value</textarea><br/><i>$field->description</i></div>\n";
 break;
+case 'select':
+$f.="<div><select name=$field->name>";
+foreach($field->options as $option){
+$selected="";
+if($option->selected){
+$selected="selected";
+}
+$f.="<option value=\"$option->value\" $selected>$option->label</option>";
+}
+$f.="</select><br/><i>$field->description</i></div>\n";
+break;
+case 'bool':
+$checked="";
+if($field->value){
+$checked="checked";
+}
+$f.="<div><input name=$field->name type=checkbox $checked><br/><i>$field->description</i></div>\n";
+break;
+
 default:
 
 $type="";
@@ -86,6 +105,7 @@ $a.=" method=\"$this->method\"";
 
 }
 
+
 $s="<form $a>\n$f\n$submit\n$hf</form>\n";
 return($s); 
 }
@@ -97,6 +117,30 @@ var $label;
 var $name;
 var $value;
 var $type;
+var $options;
+
+function __construct(){
+$this->options=array();
+}
+
+function addOption($value,$label,$selected=false){
+$option=new Formgen_Field_Option;
+
+$option->value=$value;
+$option->label=$label;
+$option->selected=$selected;
+
+$this->options[]=$option;
+
+return $this;
+}
+
+}
+
+class Formgen_Field_Option{
+var $value;
+var $label;
+var $selected;
 }
 
 Class Formgen_HiddenField{
