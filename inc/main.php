@@ -15,6 +15,17 @@ $db=new db_connection($db_config);
 $Yaps=new Yaps($db);
 $LOG_DEBUG=[];
 
+
+//localization
+$locales=array(
+"english"=>'en_US.utf8',
+"russian"=>'ru_RU.utf8'
+);
+
+
+
+
+
 // Returns a file size limit in bytes based on the PHP upload_max_filesize
 // and post_max_size
 function file_upload_max_size() {

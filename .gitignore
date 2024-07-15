@@ -1,5 +1,6 @@
 inc/config.php
 inc/modules/*
+inc/locale/*
 .htaccess
 tmp/*
 *.mo

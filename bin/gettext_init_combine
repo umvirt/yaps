@@ -1,0 +1,33 @@
+#!/usr/bin/env php
+<?php
+include "../inc/main.php";
+
+
+//Load modules controllers
+$mdir=INCDIR."modules/";
+if ($dh = opendir($mdir)) {
+ while (($file = readdir($dh)) !== false) {
+  if(is_dir($mdir.'/'.$file) and !in_array($file, array('.','..'))){
+
+
+foreach ($locales as $locale){
+
+$xfile=INCDIR."modules/$file/locales/$locale/LC_MESSAGES/yaps.po";
+//echo $xfile."\n";
+
+if(file_exists($xfile)){
+//echo $xfile."\n";
+$cmd="cat $xfile >> ".INCDIR."locale/$locale/LC_MESSAGES/yaps.po";
+echo $cmd."\n";
+var_dump(shell_exec($cmd));
+
+//$cdirs[]=INCDIR."modules/$file/controllers/".$ns;
+}
+
+}
+
+}}
+
+}
+
+

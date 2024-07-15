@@ -8,11 +8,12 @@ include INCDIR."classes/controller.php";
 include INCDIR."/tools/formgen/formgen.php";
 
 //localization
+/*
 $locales=array(
 "english"=>'en_US.utf8',
 "russian"=>'ru_RU.utf8'
 );
-
+*/
 
 
 //get default (server) locale
@@ -36,7 +37,7 @@ if (!$r) {
     logmsg ('setlocale failed');
 }
 
-bindtextdomain("yaps", "./inc/locales");
+bindtextdomain("yaps", "./inc/locale");
 textdomain("yaps");
 
 

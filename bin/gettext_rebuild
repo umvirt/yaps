@@ -1,2 +1,2 @@
-msgfmt ../inc/locales/en_US.utf8/LC_MESSAGES/yaps.po -o ../inc/locales/en_US.utf8/LC_MESSAGES/yaps.mo
-msgfmt ../inc/locales/ru_RU.utf8/LC_MESSAGES/yaps.po -o ../inc/locales/ru_RU.utf8/LC_MESSAGES/yaps.mo
+msgfmt ../inc/locale/en_US.utf8/LC_MESSAGES/yaps.po -o ../inc/locale/en_US.utf8/LC_MESSAGES/yaps.mo
+msgfmt ../inc/locale/ru_RU.utf8/LC_MESSAGES/yaps.po -o ../inc/locale/ru_RU.utf8/LC_MESSAGES/yaps.mo
