@@ -79,3 +79,10 @@ include(INCDIR."modules/$file/module.php");
 
 }
 
+function rstr($str, $replaces){
+foreach($replaces as $key=>$replace){
+$str=str_replace("%$key%",$replace,$str);
+}
+
+return $str;
+}

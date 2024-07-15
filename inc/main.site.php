@@ -7,6 +7,39 @@ include INCDIR."classes/controller.php";
 
 include INCDIR."/tools/formgen/formgen.php";
 
+//localization
+$locales=array(
+"english"=>'en_US.utf8',
+"russian"=>'ru_RU.utf8'
+);
+
+
+
+//get default (server) locale
+$locale=$config['site_locale'];
+logmsg("server locale is \"$locale\"");
+
+//get user locale
+if(@$_SESSION['locale']){
+$locale=$_SESSION['locale'];
+logmsg("user locale is \"$locale\"");
+}
+
+//init locale
+$r=putenv('LC_ALL='.$locale);
+if (!$r) {
+    logmsg ('putenv failed');
+}
+
+$r=setlocale(LC_ALL, $locale);
+if (!$r) {
+    logmsg ('setlocale failed');
+}
+
+bindtextdomain("yaps", "./inc/locales");
+textdomain("yaps");
+
+
 
 if(!@$_REQUEST["ns"]){
 $ns="default";

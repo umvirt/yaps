@@ -2,3 +2,4 @@ inc/config.php
 inc/modules/*
 .htaccess
 tmp/*
+*.mo

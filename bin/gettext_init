@@ -1,0 +1,11 @@
+echo "Creating source file..."
+
+echo "" > ../tmp/gettext/src.php
+cat ../templates/default/html/*.php >> ../tmp/gettext/src.php
+find ../inc/controllers | grep .php | xargs -n 1 cat $1 >> ../tmp/gettext/src.php
+
+echo "Creating po file..."
+
+#xgettext ../tmp/gettext/src.php -o ../tmp/gettext/yaps.po
+xgettext ../tmp/gettext/src.php --no-location --join-existing -o ../inc/locales/en_US.utf8/LC_MESSAGES/yaps.po
+xgettext ../tmp/gettext/src.php --no-location --join-existing -o ../inc/locales/ru_RU.utf8/LC_MESSAGES/yaps.po

@@ -1,5 +1,13 @@
 <?php
 class defaultController extends Controller{
+function setlocaleCmdAct(){
+global $locales;
+$_SESSION['locale']=$locales[$_REQUEST['code']];
+return true;
+}
+
+
+
 function loginCmdAct(){
 $login=@addslashes($this->request['login']);
 $password=@addslashes($this->request['password']);
@@ -38,12 +46,12 @@ return true;
 function loginfrmAct(){
 
 $f=new Formgen_Form();
-$f->AddField('Login','login','','',"User's login");
-$f->AddField('Password','password','','password',"User's password");
+$f->AddField(_('YAPS_FIELD_USERLOGIN'),'login','','',_('YAPS_FIELD_USERLOGIN_DESCRIPTION'));
+$f->AddField(_('YAPS_FIELD_USERPASSWORD'),'password','','password',_('YAPS_FIELD_USERPASSWORD_DESCRIPTION'));
 $f->AddHiddenField('ns','user');
 $f->AddHiddenField('action','login');
 $f->action=$this->yaps->config['site_path'];
-$f->submitlabel="Sign in";
+$f->submitlabel=_('YAPS_ACTION_LOGIN');
 $f->method="post";
 echo $f->render();
 
@@ -63,9 +71,12 @@ echo $f->render();
 		$islogined=$this->yaps->user->is_logined();
 		//var_dump($islogined);
 if($islogined){
-echo "You logined as ".$_SESSION['login'].". Do you want to <a href='".$this->yaps->localLink("/user/logout")."'>exit</a>?";
+echo rstr(_('YAPS_CURRENTUSER_MESSAGE'), array('login'=>$_SESSION['login'], 'link2exit'=>$this->yaps->localLink("/user/logout")));
+
+//"You logined as ".$_SESSION['login'].". Do you want to <a href='".$this->yaps->localLink("/user/logout")."'>exit</a>?";
 }else{
-echo "Welcome! Do you want to <a href='".$this->yaps->localLink("/user/loginfrm")."'>login</a>?";
+echo rstr(_('YAPS_VISITOR_MESSAGE'), array('link2login'=>$this->yaps->localLink("/user/loginfrm")));
+//"Welcome! Do you want to <a href='".$this->yaps->localLink("/user/loginfrm")."'>login</a>?";
 }
 //		echo @$user;
 //		echo "tasty";
@@ -75,7 +86,7 @@ echo "Welcome! Do you want to <a href='".$this->yaps->localLink("/user/loginfrm"
 //var_dump($this->yaps->modules);
 
 if(count($this->yaps->modules)){
-echo "<h2>Available modules</h2>";
+echo "<h2>"._('YAPS_MODULES_AVAILABLE')."</h2>";
 echo "<ul>";
 foreach($this->yaps->modules as $module){
 echo "<li><a href=\"".$this->yaps->localLink("/".$module->code)."\">$module->name</a> - $module->description";
