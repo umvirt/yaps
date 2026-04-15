@@ -78,6 +78,8 @@ $type="type=\"".$field->type."\"";
 $f.="<div><input name=$field->name value=\"$field->value\" autocomplete=off $type><br/><i>$field->description</i></div>\n";
 }
 
+}
+
 //Submit button
 $sv="";
 if($this->submitlabel){
@@ -93,7 +95,7 @@ $hf.="<input type=hidden name=\"$field->name\" value=\"$field->value\">\n";
 }
 
 
-}
+
 
 
 $a="";
