@@ -4,3 +4,4 @@ inc/locale/*
 .htaccess
 tmp/*
 *.mo
+README.html
