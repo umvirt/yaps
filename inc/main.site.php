@@ -1,13 +1,25 @@
 <?php
+/**
+ * @package YAPS
+ *
+ * Site code
+ */
+
+// launch output buffer
 ob_start();
+// launch session
 session_start();
+// load common code
 include "main.php";
+// load controller class
 include INCDIR."classes/controller.php";
-
-
+// load HTML forms generator
 include INCDIR."/tools/formgen/formgen.php";
 
-//localization
+
+// Localization init
+
+// localization debug code
 /*
 $locales=array(
 "english"=>'en_US.utf8',
@@ -15,20 +27,21 @@ $locales=array(
 );
 */
 
-
-//get default (server) locale
+// get default (server) locale
 $locale=$config['site_locale'];
 logmsg("server locale is \"$locale\"");
 
-//get user locale
-if(@$_SESSION['locale']){
-$locale=$_SESSION['locale'];
-logmsg("user locale is \"$locale\"");
+// get user locale
+if(@$_SESSION['locale'])
+{
+    $locale=$_SESSION['locale'];
+    logmsg("user locale is \"$locale\"");
 }
 
-//init locale
+// init locale
 $r=putenv('LC_ALL='.$locale);
-if (!$r) {
+if (!$r)
+{
     logmsg ('putenv failed');
 }
 
@@ -40,165 +53,197 @@ if (!$r) {
 bindtextdomain("yaps", "./inc/locale");
 textdomain("yaps");
 
+// Main request dispatching
+//
+// Default values overrinding by request values
 
-
-if(!@$_REQUEST["ns"]){
-$ns="default";
+// Conteroller namespace
+if(!@$_REQUEST["ns"])
+{
+    $ns="default";
 }else{
-$ns=$_REQUEST["ns"];
+    $ns=$_REQUEST["ns"];
 }
 
+// Controller
 @$controller=$_REQUEST['controller'];
-if(!$controller){$controller="default";}
-
-@$action=$_REQUEST['action'];
-if(!$action){$action="default";}
-
-
-
-//override default action
-if($ns=="default" and $controller=="default" and $action=="default"){
-        $ns=$config['site_default_ns'];
-        $controller=$config['site_default_controller'];
-        $action=$config['site_default_action'];
+if(!$controller)
+{
+    $controller="default";
 }
 
+// Action
+@$action=$_REQUEST['action'];
+if(!$action){
+    $action="default";
+}
+
+// Default action override
+if($ns=="default" and $controller=="default" and $action=="default")
+{
+    $ns=$config['site_default_ns'];
+    $controller=$config['site_default_controller'];
+    $action=$config['site_default_action'];
+}
+
+// print debug information
 logmsg("current namespace is \"$ns\"");
 logmsg("current controller is \"$controller\"");
 logmsg("current action is \"$action\"");
 
+// Conterollers directories init
 
-
-
-//logmsg("current namespace is \"$ns\"");
-
+// array to store controller directories
 $cdirs=array();
 
+// Load modules controllers
 
-//Load modules controllers
+// define a modules directory
 $mdir=INCDIR."modules/";
-if ($dh = opendir($mdir)) {
- while (($file = readdir($dh)) !== false) {
-  if(is_dir($mdir.'/'.$file) and !in_array($file, array('.','..'))){
-
-if(file_exists(INCDIR."modules/$file/controllers/".$ns)){
-$cdirs[]=INCDIR."modules/$file/controllers/".$ns;
+// open amodules directory
+if($dh = opendir($mdir))
+{
+    // process each item in modules directory
+    while (($file = readdir($dh)) !== false)
+    {
+        // if item is directory
+        if(is_dir($mdir.'/'.$file) and !in_array($file, array('.','..')))
+        {
+            // if directory for specific controller namespace exists
+            if(file_exists(INCDIR."modules/$file/controllers/".$ns)){
+                // append it to controller directories
+                $cdirs[]=INCDIR."modules/$file/controllers/".$ns;
+            }
+        }
+    }
 }
 
-}}
-
-}
-
-
-
-//add common directory
+// add common directory
 $cdirs[]=INCDIR."controllers/common";
-//add namespace specified directory
-//if(isset($namespaces[$ns])){
 
+// add namespace specified directory
 if(file_exists(INCDIR."controllers/".$ns)){
-$cdirs[]=INCDIR."controllers/".$ns;
+    $cdirs[]=INCDIR."controllers/".$ns;
 }
 
-//}
-//var_dump($cdirs);
-//Load each file in directories
-foreach($cdirs as $dir){
-	if(file_exists($dir)){
-		if ($dh = opendir($dir)) {
+// load each controller file in controller directories
+foreach($cdirs as $dir)
+{
+    // if directory exists
+    if(file_exists($dir))
+    {
+        // open directory
+        if ($dh = opendir($dir))
+        {
+            // print debug message
+            logmsg("looking for controllers in \"$dir\"");
 
-logmsg("looking for controllers in \"$dir\"");
+            // process each item in directory
+            while (($file = readdir($dh)) !== false)
+            {
+                // if item is php file
+                if(preg_match("/.php$/",$file))
+                {
+                    // include such file
+                    include $dir."/".$file;
 
-//echo ".$dir.";
-			while (($file = readdir($dh)) !== false) {
-				if(preg_match("/.php$/",$file)){
-					include $dir."/".$file;
-logmsg("loading controller \"".$dir."/".$file."\"");
-
-///echo $dir."/".$file;
-				}
-			}
-		}
-	}else{
-		echo "$dir - not found";
-	}
+                    // print debug message
+                    logmsg("loading controller \"".$dir."/".$file."\"");
+                }
+            }
+        }
+    }else{
+        echo "$dir - not found";
+    }
 }
 
+// define requested controller method names
 
-//$controller="default";
-//$controllerclassname=$controller."Controller";
-
-//logmsg("current controller is \"$controller\"");
-
-
-//@$action=$_REQUEST['action'];
-//if(!$action){$action="default";}
-
-//logmsg("current action is \"$action\"");
-
-/*
-//override default action
-if($ns=="default" and $controller=="default" and $action=="default"){
-	$ns=$config['site_default_ns'];
-	$controller=$config['site_default_controller'];
-	$action=$config['site_default_action'];
-}
-
-logmsg("current namespace is \"$ns\"");
-logmsg("current controller is \"$controller\"");
-logmsg("current action is \"$action\"");
-*/
-
+// method for HTML output
 $method=$action."Act";
+// method for raw (custom) output
 $rawmethod=$action."RawAct";
+// method for command
 $cmdmethod=$action."CmdAct";
 
-
-
+// define requested contoller class name
 $controllerclassname=$controller."Controller";
 
+// Controller class method execution
 
-	if(class_exists($controllerclassname)){
-		$controllerclass=new $controllerclassname();
-		logmsg("controller class is found");
-		
-		if(method_exists($controllerclass,$method)){
-			logmsg("controller action method is found");
-			$controllerclass->$method();
-		}elseif(method_exists($controllerclass,$rawmethod)){
-			ob_end_clean();
-			logmsg("controller rawaction method is found");
-			$controllerclass->$rawmethod();
-			exit;
-		}elseif(method_exists($controllerclass,$cmdmethod)){
-			ob_end_clean();
-			logmsg("controller cmdaction method is found");
-                        $x=$controllerclass->$cmdmethod();
-			$_SESSION['FLASH_MESSAGE']=$controllerclass->showCmdResult(@$x);
-//var_dump($config['site_debug']);
+// if controller class with requested name exists
+if(class_exists($controllerclassname))
+{
+    // create object from class with requested name
+    $controllerclass=new $controllerclassname();
 
-if(!$config['site_debug']){			
-					if(@$controllerclass->localnextlocation){
-						$Yaps->local_redirect($controllerclass->localnextlocation);
-					}
-                                        if(@$controllerclass->nextlocation){
-                                                $Yaps->redirect($controllerclass->nextlocation);
-                                        }
+    // print debug message
+    logmsg("controller class is found");
 
-					if(isset($_SERVER["HTTP_REFERER"])){
-					    $Yaps->redirect($_SERVER["HTTP_REFERER"]);
-					}
+    // if class have a default method
+    if(method_exists($controllerclass,$method))
+    {
+        // print debug message
+        logmsg("controller action method is found");
+        // call default method
+        $controllerclass->$method();
+    // if class have a method for raw output
+    }elseif(method_exists($controllerclass,$rawmethod))
+    {
+        // stop output buffer
+        ob_end_clean();
+        // print debug message
+        logmsg("controller rawaction method is found");
+        // call default method
+        $controllerclass->$rawmethod();
+        // stop execution
+        exit;
+    }elseif(method_exists($controllerclass,$cmdmethod))
+    {
+        // stop output buffer
+        ob_end_clean();
+        // print debug message
+        logmsg("controller cmdaction method is found");
+        // call default method and save return value
+        $x=$controllerclass->$cmdmethod();
+        //save output value in session
+        $_SESSION['FLASH_MESSAGE']=$controllerclass->showCmdResult(@$x);
+
+        // if debug is not enabled
+        if(!$config['site_debug'])
+        {
+            // if local next location is defined
+            if(@$controllerclass->localnextlocation)
+            {
+                //redirect to it
+                $Yaps->local_redirect($controllerclass->localnextlocation);
+            }
+            // if next location is defined
+            if(@$controllerclass->nextlocation){
+                //redirect to it
+                $Yaps->redirect($controllerclass->nextlocation);
+            }
+            // if previous script is defined
+            if(isset($_SERVER["HTTP_REFERER"]))
+            {
+                //redirect to it
+                $Yaps->redirect($_SERVER["HTTP_REFERER"]);
+            }
+        }
+    // if no methods are found
+    }else{
+        // stop execution with message
+        die("no action method");
+    }
+
+// if controller class not found
+}else{
+    //stop execution with message
+    die("no controller class");
 }
-//$Yaps->redirect();
-		}else{die("no action method");}
-
-	
-	}else{die("no controller class");}
 
 
-
+//restore previous command handler value from session and save it in variable
 $flash_msg=@json_decode($_SESSION['FLASH_MESSAGE']);
+//delete previous command handler value from session
 $_SESSION['FLASH_MESSAGE']="";
-
-
-//var_dump($_SESSION);
