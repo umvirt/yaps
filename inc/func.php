@@ -1,7 +1,9 @@
 <?php
 /**
  * @package YAPS
- *
+ */
+
+/**
  * Common functions
  */
 

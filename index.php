@@ -1,7 +1,9 @@
 <?php
 /**
  * @package YAPS
- *
+ */
+
+/**
  * Main HTTP/HTTPS entry point
  */
 

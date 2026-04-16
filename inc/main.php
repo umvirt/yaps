@@ -1,7 +1,9 @@
 <?php
 /**
  * @package YAPS
- *
+ */
+
+/**
  * Common code
  */
 
@@ -22,16 +24,16 @@ include INCDIR."config.php";
 // load main classes
 
 // database interface class
-include INCDIR."classes/db.php";
+include INCDIR."classes/DatabaseConnection.php";
 // app object class
-include INCDIR."classes/yaps.php";
+include INCDIR."classes/Yaps.php";
 // user object class
-include INCDIR."classes/user.php";
+include INCDIR."classes/YapsUser.php";
 // module object class
-include INCDIR."classes/module.php";
+include INCDIR."classes/YapsModule.php";
 
 // database interface init
-$db=new db_connection($db_config);
+$db=new DatabaseConnection($db_config);
 
 // app object init
 $Yaps=new Yaps($db);

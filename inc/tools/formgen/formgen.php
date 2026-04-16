@@ -1,34 +1,37 @@
 <?php
+namespace Yaps\Tools\Formgen;
 /**
- * @package YAPS/tools/formgen
- *
- * HTML forms generator
+ * @package YAPS\Tools\Formgen
  */
 /**
  * Form class
  */
-class Formgen_Form{
+class FormgenForm{
     /**
-     * @var form method 'get' or 'post'
+     * HTML form method
+     * @var string $method form's method 'get' or 'post'
      */
     var $method;
     /**
-     * @var label for submit button
+     * HTML form submit button label
+     * @var string $label label for submit button
      */
     var $submitlabel;
     /**
-     * @var form action
+     * HTML form action
+     * @var string $action form's action
      */
     var $action;
     /**
-     * @var form visible fields
+     * HTML form visible fields list
+     * @var array $fields form's visible fields
      */
     var $fields;
     /**
-     * @var form hidden fields
+     * HTML form hidden fields list
+     * @var array $hiddenfields form's hidden fields
      */
     var $hiddenfields;
-
     /**
      * Constructor
      */
@@ -44,18 +47,18 @@ class Formgen_Form{
     /**
      * Add visible field
      *
-     * @param string label field label
-     * @param string name field name
-     * @param string value field value
-     * @param string type field type
-     * @param string description field description text
+     * @param string $label field label
+     * @param string $name field name
+     * @param string $value field value
+     * @param string $type field type
+     * @param string $description field description text
      *
-     * @return object field object
+     * @return FormgenField field object
      */
     function AddField($label,$name,$value="",$type="",$description="")
     {
         // create field object
-        $field=new Formgen_Field();
+        $field=new FormgenField();
 
         // pass values
         $field->label=$label;
@@ -73,25 +76,27 @@ class Formgen_Form{
     /**
      * Add hidden field
      *
-     * @param string name field name
-     * @param string value field value
+     * @param string $name field name
+     * @param string $value field value
      *
-     * @return object field object
+     * @return FormgenHiddenField hidden field object
      */
     function AddHiddenField($name,$value)
     {
-        $field=new Formgen_HiddenField();
+        $field=new FormgenHiddenField();
         $field->name=$name;
         $field->value=$value;
         //add field
         $this->hiddenfields[]=$field;
 
-        return $this;
+        return $field;
     }
 
 
     /**
      * HTML form render
+     *
+     * @return string HTML code string
      */
     function render()
     {
@@ -211,7 +216,7 @@ class Formgen_Form{
 /**
  * Form visible field class
  */
-class Formgen_Field
+class FormgenField
 {
     /**
      * @var field label
@@ -253,7 +258,7 @@ class Formgen_Field
      */
     function addOption($value,$label,$selected=false)
     {
-        $option=new Formgen_Field_Option;
+        $option=new FormgenFieldOption;
 
         $option->value=$value;
         $option->label=$label;
@@ -268,7 +273,7 @@ class Formgen_Field
 /**
  * Form field option class
  */
-class Formgen_Field_Option
+class FormgenFieldOption
 {
     var $value;
     var $label;
@@ -277,7 +282,7 @@ class Formgen_Field_Option
 /**
  * Form hidden field class
  */
-Class Formgen_HiddenField{
+Class FormgenHiddenField{
     var $name;
     var $value;
 }

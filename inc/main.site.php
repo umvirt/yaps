@@ -1,7 +1,9 @@
 <?php
 /**
  * @package YAPS
- *
+ */
+
+/**
  * Site code
  */
 
@@ -12,7 +14,7 @@ session_start();
 // load common code
 include "main.php";
 // load controller class
-include INCDIR."classes/controller.php";
+include INCDIR."classes/YapsController.php";
 // load HTML forms generator
 include INCDIR."/tools/formgen/formgen.php";
 
@@ -166,8 +168,11 @@ $rawmethod=$action."RawAct";
 // method for command
 $cmdmethod=$action."CmdAct";
 
+//var_dump(get_declared_classes(),$LOG_DEBUG);
+//exit;
+
 // define requested contoller class name
-$controllerclassname=$controller."Controller";
+$controllerclassname="Yaps\\Controllers\\".$ns."Namespace\\".$controller."Controller";
 
 // Controller class method execution
 
@@ -238,6 +243,7 @@ if(class_exists($controllerclassname))
 
 // if controller class not found
 }else{
+    //var_dump(get_declared_classes(),$controllerclassname);
     //stop execution with message
     die("no controller class");
 }
