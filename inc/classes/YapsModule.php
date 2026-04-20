@@ -1,5 +1,7 @@
 <?php
+
 namespace Yaps;
+
 /**
  * @package YAPS
  */
@@ -7,7 +9,8 @@ namespace Yaps;
 /**
  * Run-time module object
  */
-class YapsModule{
+class YapsModule
+{
     /**
      * @var string $code module code
      */
@@ -27,9 +30,9 @@ class YapsModule{
     /**
     * Backup module
     */
-    function backup($path){}
+    public function backup($path) {}
     /**
     * Restore module
     */
-    function restore($path){}
+    public function restore($path) {}
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package YAPS
  */
@@ -8,65 +9,59 @@
  */
 
 // enable debuging
-ini_set('display_errors',1);
-ini_set('error_reporting',E_ALL);
+ini_set('display_errors', 1);
+ini_set('error_reporting', E_ALL);
 
 // define main constants
-DEFINE('APPDIR',dirname(dirname(__file__)).'/');
-DEFINE('INCDIR',APPDIR.'/inc/');
+DEFINE('APPDIR', dirname(dirname(__file__)) . '/');
+DEFINE('INCDIR', APPDIR . '/inc/');
 
 // load functions
-include INCDIR."func.php";
+include INCDIR . "func.php";
 
 // load config file
-include INCDIR."config.php";
+include INCDIR . "config.php";
 
 // load main classes
 
 // database interface class
-include INCDIR."classes/DatabaseConnection.php";
+include INCDIR . "classes/DatabaseConnection.php";
 // app object class
-include INCDIR."classes/Yaps.php";
+include INCDIR . "classes/Yaps.php";
 // user object class
-include INCDIR."classes/YapsUser.php";
+include INCDIR . "classes/YapsUser.php";
 // module object class
-include INCDIR."classes/YapsModule.php";
+include INCDIR . "classes/YapsModule.php";
 
 // database interface init
-$db=new DatabaseConnection($db_config);
+$db = new DatabaseConnection($db_config);
 
 // app object init
-$Yaps=new Yaps($db);
+$Yaps = new Yaps($db);
 
-$LOG_DEBUG=[];
+$LOG_DEBUG = [];
 
 // localization init
-$locales=array(
-"english"=>'en_US.utf8',
-"russian"=>'ru_RU.utf8'
-);
+$locales = [
+    "english" => 'en_US.utf8',
+    "russian" => 'ru_RU.utf8',
+];
 
 //Load modules
 
 // define a modules directory
-$mdir=INCDIR."modules/";
+$mdir = INCDIR . "modules/";
 // open amodules directory
-if ($dh = opendir($mdir))
-{
+if ($dh = opendir($mdir)) {
     // process each item in modules directory
-    while (($file = readdir($dh)) !== false)
-    {
+    while (($file = readdir($dh)) !== false) {
         // if item is directory
-        if(is_dir($mdir.'/'.$file) and !in_array($file, array('.','..')))
-        {
+        if (is_dir($mdir . '/' . $file) and !in_array($file, ['.','..'])) {
             // if module directory contain file 'module.php'
-            if(file_exists(INCDIR."modules/$file/module.php"))
-            {
+            if (file_exists(INCDIR . "modules/$file/module.php")) {
                 //load this file
-                include(INCDIR."modules/$file/module.php");
+                include(INCDIR . "modules/$file/module.php");
             }
         }
     }
 }
-
-

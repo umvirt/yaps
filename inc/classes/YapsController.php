@@ -1,5 +1,7 @@
 <?php
+
 namespace Yaps;
+
 /**
  * @package YAPS
  */
@@ -67,19 +69,19 @@ class YapsController
     *
     * @return void
     */
-    function __construct()
+    public function __construct()
     {
         // Defining of global parameters
-        @$this->globals=$GLOBALS;
-        @$this->request=$GLOBALS["_REQUEST"];
-        @$this->get=$GLOBALS["_GET"];
-        @$this->post=$GLOBALS["_POST"];
-        @$this->session=$GLOBALS["_SESSION"];
-        @$this->cookie=$GLOBALS["_COOKIE"];
-        @$this->env=$GLOBALS["_ENV"];
-        @$this->server=$GLOBALS["_SERVER"];
-        @$this->files=$GLOBALS["_FILES"];
-        @$this->yaps=$GLOBALS["Yaps"];
+        @$this->globals = $GLOBALS;
+        @$this->request = $GLOBALS["_REQUEST"];
+        @$this->get = $GLOBALS["_GET"];
+        @$this->post = $GLOBALS["_POST"];
+        @$this->session = $GLOBALS["_SESSION"];
+        @$this->cookie = $GLOBALS["_COOKIE"];
+        @$this->env = $GLOBALS["_ENV"];
+        @$this->server = $GLOBALS["_SERVER"];
+        @$this->files = $GLOBALS["_FILES"];
+        @$this->yaps = $GLOBALS["Yaps"];
     }
 
     /**
@@ -93,91 +95,82 @@ class YapsController
     * $text - command text
     * @return string JSON
     */
-    function showCmdResult($obj=NULL)
+    public function showCmdResult($obj = null)
     {
         // title
 
         // if title not defined
-        if(!@$this->cmdResult->title)
-        {
+        if (!@$this->cmdResult->title) {
             // get action object
-            $xobj=@$this->yaps->action;
+            $xobj = @$this->yaps->action;
             // if action object is valid
-            if(is_object($xobj))
-            {
+            if (is_object($xobj)) {
                 // override title
-                $this->cmdResult->title=$xobj->title_;
+                $this->cmdResult->title = $xobj->title_;
             }
         }
 
         // set title
-        $title=@$this->cmdResult->title;
+        $title = @$this->cmdResult->title;
 
         // if object not passed
-        if(!$obj)
-        {
+        if (!$obj) {
             // report a failure by default
 
             // set status
-            $status="fail";
+            $status = "fail";
             // set description text
-            $text=CMD_FAIL_RESULT;
+            $text = CMD_FAIL_RESULT;
 
             //if status is defined in cmdResult object
-            if(@$this->cmdResult->status)
-            {
+            if (@$this->cmdResult->status) {
                 // override it
-                $status=$this->cmdResult->status;
+                $status = $this->cmdResult->status;
             }
 
             //if title is defined in cmdResult object
-            if(@$this->cmdResult->title)
-            {
-                $title=$this->cmdResult->title;
+            if (@$this->cmdResult->title) {
+                $title = $this->cmdResult->title;
             }
 
             //if description is defined in cmdResult object
-            if(@$this->cmdResult->text)
-            {
-                $text=$this->cmdResult->text;
+            if (@$this->cmdResult->text) {
+                $text = $this->cmdResult->text;
             }
-        // if object is passed
-        }else{
+            // if object is passed
+        } else {
             // report a success
 
             // set status
-            $status='success';
+            $status = 'success';
             // set description text
-            $text=CMD_SUCCESS_RESULT;
+            $text = CMD_SUCCESS_RESULT;
         }
 
         //if title is not defined
-        if(!@$title)
-        {
+        if (!@$title) {
             //set default title
-            $title=OBJ_CMD_RESULT;
+            $title = OBJ_CMD_RESULT;
         }
 
         //quet mode
 
         //set default value
-        $quiet="";
+        $quiet = "";
 
         //if quet mode requested
-        if(@$this->quiet)
-        {
+        if (@$this->quiet) {
             //overrde quet mode value
-            $quiet=", \"quiet\": true";
+            $quiet = ", \"quiet\": true";
         }
 
         // JSON object generation
 
         // if status is valid
-        if($status=="success" or $status=="fail" or $status=="info")
-        {
+        if ($status == "success" or $status == "fail" or $status == "info") {
             // return JSON-object with specific status
             return "{\"status\": \"$status\", \"title\": \"$title\", \"text\": \"$text\", \"_object\": \"CmdResult\" $quiet}";
-        }else{
+        } else {
             // return JSON-object with info status
             return "{\"status\": \"info\", \"title\": \"$title\", \"text\": \"$text\", \"_object\": \"CmdResult\" $quiet}";
         }
@@ -189,13 +182,10 @@ class YapsController
 *
 * Used to store command results and pass them to user as JSON object in Handler::showCmdResult()
 */
-class CmdResult{
-    var $status;
-    var $title;
-    var $text;
-    var $redirect=false;
+class CmdResult
+{
+    public $status;
+    public $title;
+    public $text;
+    public $redirect = false;
 }
-
-
-
-

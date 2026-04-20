@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package YAPS
  */
@@ -6,7 +7,8 @@
 /**
  * Current user account class
  */
-class YapsUser{
+class YapsUser
+{
     /**
      * Database Connection
      * @var DatabaseConnection $db Database connection object
@@ -28,12 +30,12 @@ class YapsUser{
      * @param DatabaseConnection $db Database connection object
      * @return void
     */
-    function __construct($db)
+    public function __construct($db)
     {
         // pass dataase connection
-        $this->db=$db;
+        $this->db = $db;
         // fill user's rolles list
-        $this->roles=$this->getRoles();
+        $this->roles = $this->getRoles();
     }
     /**
     * Return UID existance
@@ -41,10 +43,10 @@ class YapsUser{
     * @param integer $uid user id
     * @return bool true if user exists
     */
-    function exist($uid)
+    public function exist($uid)
     {
         $this->db->execute("select uid from users where uid=$uid");
-        $e=$this->db->dataset;
+        $e = $this->db->dataset;
         return count($e);
     }
 
@@ -55,7 +57,7 @@ class YapsUser{
      * @param string $password user's passeword
      * @return int UID if user exists
      */
-    function chkcredentials($login, $password)
+    public function chkcredentials($login, $password)
     {
         //Simple verification (raw password)
         /*
@@ -67,14 +69,12 @@ class YapsUser{
         }
         */
         //Complex verification (pasword hash)
-        $sql="select uid, salt, password from users where `login`=\"$login\"";
+        $sql = "select uid, salt, password from users where `login`=\"$login\"";
         $this->db->execute($sql);
-        $e=$this->db->dataset;
-        foreach($e as $v)
-        {
-            if(hash_equals($v['password'],crypt($password,$v['salt'])))
-            {
-                    return $v['uid'];
+        $e = $this->db->dataset;
+        foreach ($e as $v) {
+            if (hash_equals($v['password'], crypt($password, $v['salt']))) {
+                return $v['uid'];
             }
         }
     }
@@ -84,9 +84,9 @@ class YapsUser{
      *
      * @return int UID if user exists
      */
-    function is_logined()
+    public function is_logined()
     {
-        return $this->chkcredentials(@$_SESSION['login'],@$_SESSION['password']);
+        return $this->chkcredentials(@$_SESSION['login'], @$_SESSION['password']);
     }
 
     /**
@@ -94,28 +94,27 @@ class YapsUser{
      *
      * @return array<string> roles list
      */
-    function getRoles()
+    public function getRoles()
     {
         // get current uid
-        $this->uid=$this->is_logined();
+        $this->uid = $this->is_logined();
 
         // init roles list
-        $res=array();
+        $res = [];
 
         // if uid is found
-        if($this->uid)
-        {
+        if ($this->uid) {
             // add role user
-            $res[]='user';
+            $res[] = 'user';
             //if uid is 1
-            if($this->uid==1){
+            if ($this->uid == 1) {
                 //add role superuser
-                $res[]='superuser';
+                $res[] = 'superuser';
             }
-        // if UID not found
-        }else{
+            // if UID not found
+        } else {
             //add role visitor
-            $res[]='visitor';
+            $res[] = 'visitor';
         }
 
         return $res;
@@ -126,7 +125,7 @@ class YapsUser{
     *
     * @return bool true if role assigned to user
     */
-    function in_role($code)
+    public function in_role($code)
     {
         return in_array($code, $this->roles);
     }

@@ -1,47 +1,50 @@
 <?php
+
 namespace Yaps\Tools\Formgen;
+
 /**
  * @package YAPS\Tools\Formgen
  */
 /**
  * Form class
  */
-class FormgenForm{
+class FormgenForm
+{
     /**
      * HTML form method
      * @var string $method form's method 'get' or 'post'
      */
-    var $method;
+    public $method;
     /**
      * HTML form submit button label
      * @var string $label label for submit button
      */
-    var $submitlabel;
+    public $submitlabel;
     /**
      * HTML form action
      * @var string $action form's action
      */
-    var $action;
+    public $action;
     /**
      * HTML form visible fields list
      * @var array $fields form's visible fields
      */
-    var $fields;
+    public $fields;
     /**
      * HTML form hidden fields list
      * @var array $hiddenfields form's hidden fields
      */
-    var $hiddenfields;
+    public $hiddenfields;
     /**
      * Constructor
      */
-    function __construct()
+    public function __construct()
     {
         $this->method;
         $this->submitlabel;
-        $this->actions=Array();
-        $this->fields=Array();
-        $this->hiddenfields=Array();
+        $this->actions = [];
+        $this->fields = [];
+        $this->hiddenfields = [];
     }
 
     /**
@@ -55,20 +58,20 @@ class FormgenForm{
      *
      * @return FormgenField field object
      */
-    function AddField($label,$name,$value="",$type="",$description="")
+    public function AddField($label, $name, $value = "", $type = "", $description = "")
     {
         // create field object
-        $field=new FormgenField();
+        $field = new FormgenField();
 
         // pass values
-        $field->label=$label;
-        $field->name=$name;
-        $field->value=$value;
-        $field->type=$type;
-        $field->description=$description;
+        $field->label = $label;
+        $field->name = $name;
+        $field->value = $value;
+        $field->type = $type;
+        $field->description = $description;
 
         //add field
-        $this->fields[]=$field;
+        $this->fields[] = $field;
 
         return $field;
     }
@@ -81,13 +84,13 @@ class FormgenForm{
      *
      * @return FormgenHiddenField hidden field object
      */
-    function AddHiddenField($name,$value)
+    public function AddHiddenField($name, $value)
     {
-        $field=new FormgenHiddenField();
-        $field->name=$name;
-        $field->value=$value;
+        $field = new FormgenHiddenField();
+        $field->name = $name;
+        $field->value = $value;
         //add field
-        $this->hiddenfields[]=$field;
+        $this->hiddenfields[] = $field;
 
         return $field;
     }
@@ -98,116 +101,107 @@ class FormgenForm{
      *
      * @return string HTML code string
      */
-    function render()
+    public function render()
     {
         // Visible fields rendering
         // init buffer
-        $f="";
+        $f = "";
         // process each visible field
-        foreach($this->fields as $field)
-        {
+        foreach ($this->fields as $field) {
             // pass label to buffer
-            $f.="<div><b>$field->label</b></div>\n";
+            $f .= "<div><b>$field->label</b></div>\n";
             // check a field type
-            switch($field->type)
-            {
+            switch ($field->type) {
                 // if 'textarea'
                 case 'textarea':
                     // pass textarea to buffer
-                    $f.="<div><textarea rows=6 cols=40 name=$field->name>$field->value</textarea><br/><i>$field->description</i></div>\n";
-                break;
-                // if 'select'
+                    $f .= "<div><textarea rows=6 cols=40 name=$field->name>$field->value</textarea><br/><i>$field->description</i></div>\n";
+                    break;
+                    // if 'select'
                 case 'select':
                     // pass select to buffer
-                    $f.="<div><select name=$field->name>";
+                    $f .= "<div><select name=$field->name>";
                     // process each option
-                    foreach($field->options as $option)
-                    {
+                    foreach ($field->options as $option) {
                         // init selected mark
-                        $selected="";
+                        $selected = "";
                         // if option selected
-                        if($option->selected)
-                        {
+                        if ($option->selected) {
                             // set mark value
-                            $selected="selected";
+                            $selected = "selected";
                         }
                         // pass option to buffer
-                        $f.="<option value=\"$option->value\" $selected>$option->label</option>";
+                        $f .= "<option value=\"$option->value\" $selected>$option->label</option>";
                     }
                     // pass select to buffer
-                    $f.="</select><br/><i>$field->description</i></div>\n";
+                    $f .= "</select><br/><i>$field->description</i></div>\n";
                     break;
-                // if binary field
+                    // if binary field
                 case 'bool':
                     // init checked mark
-                    $checked="";
+                    $checked = "";
                     // if value is defined
-                    if($field->value)
-                    {
+                    if ($field->value) {
                         // set mark value
-                        $checked="checked";
+                        $checked = "checked";
                     }
                     //pass checkbox field to buffer
-                    $f.="<div><input name=$field->name type=checkbox $checked><br/><i>$field->description</i></div>\n";
+                    $f .= "<div><input name=$field->name type=checkbox $checked><br/><i>$field->description</i></div>\n";
                     break;
-                // in other case
+                    // in other case
                 default:
                     // define default value for field
-                    $type="";
+                    $type = "";
                     // if field for value is defined
-                    if($field->type)
-                    {
+                    if ($field->type) {
                         // pass it
-                        $type="type=\"".$field->type."\"";
+                        $type = "type=\"" . $field->type . "\"";
                     }
                     // pass field to buffer
-                    $f.="<div><input name=$field->name value=\"$field->value\" autocomplete=off $type><br/><i>$field->description</i></div>\n";
+                    $f .= "<div><input name=$field->name value=\"$field->value\" autocomplete=off $type><br/><i>$field->description</i></div>\n";
             }
         }
 
         // Submit button
         // define default value
-        $sv="";
+        $sv = "";
         // if label is defined
-        if($this->submitlabel)
-        {
+        if ($this->submitlabel) {
             //override default value
-            $sv="value=\"$this->submitlabel\"";
+            $sv = "value=\"$this->submitlabel\"";
         }
         // generate submit button code
-        $submit="<div><input type=submit $sv></div>";
+        $submit = "<div><input type=submit $sv></div>";
 
 
         // Hidden fields
 
         // init buffer
-        $hf="";
+        $hf = "";
 
         // process each hiden field
-        foreach($this->hiddenfields as $field)
-        {
+        foreach ($this->hiddenfields as $field) {
             //pass field to buffer
-            $hf.="<input type=hidden name=\"$field->name\" value=\"$field->value\">\n";
+            $hf .= "<input type=hidden name=\"$field->name\" value=\"$field->value\">\n";
         }
 
 
         // init form action buffer
-        $a="";
+        $a = "";
         // if form action is defined
-        if($this->action)
-        {
+        if ($this->action) {
             //redefine bouffer
-            $a="action=\"$this->action\"";
+            $a = "action=\"$this->action\"";
         }
 
         // if form method is defined
-        if($this->method){
+        if ($this->method) {
             //save it in buffer
-            $a.=" method=\"$this->method\"";
+            $a .= " method=\"$this->method\"";
         }
 
         // generate form code
-        $s="<form $a>\n$f\n$submit\n$hf</form>\n";
+        $s = "<form $a>\n$f\n$submit\n$hf</form>\n";
 
         return($s);
     }
@@ -221,30 +215,30 @@ class FormgenField
     /**
      * @var field label
      */
-    var $label;
+    public $label;
     /**
      * @var field name
      */
-    var $name;
+    public $name;
     /**
      * @var field value
      */
-    var $value;
+    public $value;
     /**
      * @var field type
      */
-    var $type;
+    public $type;
     /**
      * @var field options (used by select fields)
      */
-    var $options;
+    public $options;
 
     /**
      * Constructor
      */
-    function __construct()
+    public function __construct()
     {
-        $this->options=array();
+        $this->options = [];
     }
 
     /**
@@ -256,15 +250,15 @@ class FormgenField
      *
      * @return object field option object
      */
-    function addOption($value,$label,$selected=false)
+    public function addOption($value, $label, $selected = false)
     {
-        $option=new FormgenFieldOption;
+        $option = new FormgenFieldOption();
 
-        $option->value=$value;
-        $option->label=$label;
-        $option->selected=$selected;
+        $option->value = $value;
+        $option->label = $label;
+        $option->selected = $selected;
 
-        $this->options[]=$option;
+        $this->options[] = $option;
 
         return $this;
     }
@@ -275,16 +269,15 @@ class FormgenField
  */
 class FormgenFieldOption
 {
-    var $value;
-    var $label;
-    var $selected;
+    public $value;
+    public $label;
+    public $selected;
 }
 /**
  * Form hidden field class
  */
-Class FormgenHiddenField{
-    var $name;
-    var $value;
+class FormgenHiddenField
+{
+    public $name;
+    public $value;
 }
-
-

@@ -1,5 +1,7 @@
 <?php
+
 namespace Yaps\Controllers\defaultNamespace;
+
 /**
  * @package YAPS\Controllers\default
  */
@@ -7,11 +9,12 @@ namespace Yaps\Controllers\defaultNamespace;
 /**
  * Default controller
  */
-class defaultController extends \Yaps\YapsController{
+class defaultController extends \Yaps\YapsController
+{
     /**
      * Default action (main page)
      */
-    function defaultAct()
+    public function defaultAct()
     {
         echo "Hello World!";
     }

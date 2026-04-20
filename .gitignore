@@ -2,6 +2,9 @@ inc/config.php
 inc/modules/*
 inc/locale/*
 .htaccess
+.php-cs-fixer.cache
+composer.json
+vendor
 tmp/*
 *.mo
 README.html

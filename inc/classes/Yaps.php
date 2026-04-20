@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package YAPS
  */
@@ -6,7 +7,8 @@
 /**
  * Core application class
  */
-class Yaps{
+class Yaps
+{
     /**
      * Configuration
      * @var array $config Configuration array
@@ -33,18 +35,18 @@ class Yaps{
      * @param DatabaseConnection $db Database connection object
      * @return void
      */
-    function __construct($db)
+    public function __construct($db)
     {
         // open global configuration
         global $config;
         // init current user object
-        $this->user=new YapsUser($db);
+        $this->user = new YapsUser($db);
         // pass config
-        $this->config=$config;
+        $this->config = $config;
         // pass database connection
-        $this->db=$db;
+        $this->db = $db;
         // init runtime modules list
-        $this->modules=array();
+        $this->modules = [];
     }
 
     /**
@@ -53,7 +55,7 @@ class Yaps{
      * @param string url URL to redirect
      * @return void
      */
-    function redirect($url)
+    public function redirect($url)
     {
         // send a http header
         header("Location: $url");
@@ -67,12 +69,12 @@ class Yaps{
      * @param string $path path related to root directory
      * @return string URL for given path
      */
-    function localLink($path="/")
+    public function localLink($path = "/")
     {
         // remove first slash
-        $path=substr($path, 1);
+        $path = substr($path, 1);
         // append path to site path
-        $target=$this->config["site_path"].$path;
+        $target = $this->config["site_path"] . $path;
         return $target;
     }
 
@@ -82,10 +84,10 @@ class Yaps{
      * @param string $path path related to root directory
      * @return void
      */
-    function local_redirect($path="/")
+    public function local_redirect($path = "/")
     {
         // compose URL for path
-        $target=$this->localLink($path);
+        $target = $this->localLink($path);
         // send a http header
         header("Location: $target");
         // stop execution
@@ -101,19 +103,19 @@ class Yaps{
      * @param string $description description for module
      * @return void
      */
-    function addModule($object,$code,$name,$description){
+    public function addModule($object, $code, $name, $description)
+    {
         // create module object
-        $obj=new \Yaps\YapsModule();
+        $obj = new \Yaps\YapsModule();
         // pass object to module object
-        $obj->object=$object;
+        $obj->object = $object;
         // define code to module object
-        $obj->code=$code;
+        $obj->code = $code;
         // define name to module object
-        $obj->name=$name;
+        $obj->name = $name;
         // define description to module object
-        $obj->description=$description;
+        $obj->description = $description;
         // append module object to list
-        $this->modules[]=$obj;
+        $this->modules[] = $obj;
     }
 }
-
